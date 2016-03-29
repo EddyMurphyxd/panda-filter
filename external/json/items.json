@@ -1,0 +1,16 @@
+[
+  {
+    "title": "hi",
+    "description": "A small description to item",
+    "category": "non-transparent",
+    "height": "120",
+    "price": "1400"
+  },
+  {
+    "title": "Hi again",
+    "description": "Smaller desc of item",
+    "category": "transparent",
+    "height": "67",
+    "price": "990"
+  }
+]

@@ -1,0 +1,28 @@
+{
+  "name": "filterUp",
+  "version": "0.0.0",
+  "description": "A jquery plugin which allows to filter elements with several options",
+  "main": "index.js",
+  "scripts": {
+    "test": "Hello World!"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/EddyMurphyxd/filterUp.git"
+  },
+  "author": "Vlad Fang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EddyMurphyxd/filterUp/issues"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-jshint": "^2.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^2.2.0",
+    "gulp-sass-bulk-import": "^1.0.0",
+    "gulp-util": "^3.0.7",
+    "jshint": "^2.9.1",
+    "jshint-stylish": "^2.1.0"
+  }
+}

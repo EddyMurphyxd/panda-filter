@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Filter shit up</title>
+
+  <link rel="stylesheet" href="/external/css/layout.css">
+  <link rel="stylesheet" href="/external/css/animate.css">
+</head>
+<body>
+  <div class="container">
+    <div class="filter-wrapper">
+
+      <div class="row">
+        <div class="col-sm-8">
+          <div class="category-filter clearfix pull-left">
+            <ul class="inline">
+              <li><a href="#" class="panda-filter-category-button" 
+              data-filter-category="strong"
+              data-filter-category-available="">strong</a></li>
+              <li><a href="#" class="panda-filter-category-button" 
+              data-filter-category="light"
+              data-filter-category-available="">Light</a></li>
+              <li><a href="#" class="panda-filter-category-button" 
+              data-filter-category="anxious"
+              data-filter-category-available="">anxious</a></li>
+              <li><a href="#" class="panda-filter-category-button" 
+              data-filter-category="fury"
+              data-filter-category-available="">fury</a></li>
+              <li><a href="#" class="panda-filter-category-button" 
+              data-filter-category="transparent"
+              data-filter-category-available="">transparent</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-sm-4">
+          <div class="sorting-filter">
+            <ul class="inline">
+              <li><a href="#" class="panda-filter-sorting-button active" data-sorting-type="min-height">low to high</a></li>
+              <li><a href="#" class="panda-filter-sorting-button" data-sorting-type="max-height">high to low</a></li>
+              <li><a href="#" class="panda-filter-sorting-button" data-sorting-type="min-price">cheap to expensive</a></li>
+              <li><a href="#" class="panda-filter-sorting-button" data-sorting-type="max-price">expensive to cheap</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-sm-12">
+          <p><a href="#" class="panda-filter-reset">Reset filters</a></p>
+        </div>  
+      </div>
+
+      <div class="row">
+        <div class="col-sm-5">
+          <div class="panda-filter-active-categories-list">
+            <p>Active categories:</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <div class="sidebar">
+            <div class="category-filter">
+              <form class="panda-filter-search-wrapper">
+                <input type="text" class="panda-filter-search form-control" placeholder="Search items...">
+                <span class="panda-filter-clear-search"></span>
+              </form>
+             
+              <p class="panda-filter-category-group" data-filter-category-group="facility">Facility:</p>
+
+              <ul>
+                <li>
+                  <a 
+                    href="#" 
+                    class="panda-filter-category-button"
+                    data-filter-category-group="facility"
+                    data-filter-category-available=""
+                    data-filter-category="enhanced">enhanced
+                  </a>
+                </li>
+
+                <li>
+                  <a 
+                    href="#" 
+                    class="panda-filter-category-button"
+                    data-filter-category-group="facility"
+                    data-filter-category-available=""
+                    data-filter-category="elementary"
+                    data-filter-category-available="">elementary
+                  </a>
+                </li>
+              </ul>
+
+              <p class="panda-filter-category-group" data-filter-category-group="utility">Utility:</p>
+
+              <ul>
+                <li>
+                  <a 
+                    href="#" 
+                    class="panda-filter-category-button"
+                    data-filter-category-group="utility"
+                    data-filter-category-available=""
+                    data-filter-category="think">think
+                  </a>
+                </li>
+
+                <li>
+                  <a 
+                    href="#" 
+                    class="panda-filter-category-button"
+                    data-filter-category-group="utility"
+                    data-filter-category-available=""
+                    data-filter-category="quick">quick
+                  </a>
+                </li>
+
+                <li>
+                  <a 
+                    href="#" 
+                    class="panda-filter-category-button"
+                    data-filter-category-group="utility"
+                    data-filter-category-available=""
+                    data-filter-category="gigantic">gigantic
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-8">
+          <div class="items-wrapper">
+            <div class="panda-filter-no-result"><p>Oups..no results fount by your matching</p></div>
+
+            <div class="items-list clearfix">
+              <div 
+                class="panda-filter-item" 
+                data-filter-height="10"
+                data-filter-price="533" 
+                data-filter-category="strong, enhanced" style="height: 200px">
+                  <span class="title">Strong & Enhanced</span>
+                  <p class="description">Nice dude</p>
+              </div>
+
+              <div 
+                class="panda-filter-item" 
+                data-filter-height="5" 
+                data-filter-price="123" 
+                data-filter-category="light">
+                  <span class="title">Light</span>
+                  <p class="description">Nicde</p>
+              </div>
+
+              <div 
+                class="panda-filter-item" 
+                data-filter-height="40"
+                data-filter-price="400" 
+                data-filter-category="anxious, fury">
+                  <span class="title">Anxious & Fury</span>
+                  <p class="description"> dude</p>
+              </div>
+
+              <div 
+                class="panda-filter-item" 
+                data-filter-height="15"
+                data-filter-price="991" 
+                data-filter-category="fury, strong">
+                  <span class="title">Fury & strong</span>
+                  <p class="description">Nice </p>
+              </div>
+
+              <div 
+                class="panda-filter-item" 
+                data-filter-height="80"
+                data-filter-price="15000" 
+                data-filter-category="enhanced">
+                  <span class="title">Enhanced</span>
+                  <p class="description">Nice dude</p>
+              </div>
+
+              <div 
+                class="panda-filter-item" 
+                data-filter-height="75"
+                data-filter-price="765345" 
+                data-filter-category="elementary">
+                  <span class="title">elementary</span>
+                  <p class="description">asd dude</p>
+              </div>
+
+              <div 
+                class="panda-filter-item" 
+                data-filter-height="99"
+                data-filter-price="5260" 
+                data-filter-category="think, light" style="height: 250px">
+                  <span class="title">think & light</span>
+                  <p class="description">Nice 123</p>
+              </div>
+
+              <div 
+                class="panda-filter-item" 
+                data-filter-height="43"
+                data-filter-price="43" 
+                data-filter-category="quick">
+                  <span class="title">quick</span>
+                  <p class="description">Nice dude</p>
+              </div>
+
+              <div 
+                class="panda-filter-item" 
+                data-filter-height="69"
+                data-filter-price="678" 
+                data-filter-category="gigantic">
+                  <span class="title">gigantic</span>
+                  <p class="description">Nice dude</p>
+              </div>
+
+              <div 
+                class="panda-filter-item" 
+                data-filter-height="72"
+                data-filter-price="7232" 
+                data-filter-category="worseless">
+                  <span class="title">worseless</span>
+                  <p class="description">Nice dude</p>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12 text-center load-more-wrapper">
+              <a href="#" class="panda-filter-load-more" data-url="/external/json/items.json">Load more items</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/external/js/jquery-1.12.0.min.js"></script>
+  <script src="/external/js/bootstrap.min.js"></script>
+  <script src="/js/pandaFilter.js"></script>
+  <script src="/js/main.js"></script>
+</body>
+</html>
