@@ -1,7 +1,7 @@
 (function($) {
   $(function() {
     $('.filter-wrapper').pandaFilter({
-      showActive: false,
+      showActive: true,
       showAvailable: true
     });
   });

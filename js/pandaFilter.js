@@ -25,12 +25,6 @@
   function Panda(element, options) {
 
     /**
-     * Current settings for the filter.
-     * @public
-     */
-    this.settings = null;
-
-    /**
      * Proxied event handlers.
      * @protected
      */
@@ -41,16 +35,6 @@
      * @protected
      */
     this._speed = null;
-
-    /**
-     * Current width of the plugin element.
-     */
-    this._width = null;
-
-    /**
-     * Widths of all items.
-     */
-    this._widths = [];
 
     /**
      * Current options set by the caller including defaults.
@@ -64,16 +48,28 @@
      */
     this.$element = $(element);
 
+    /**
+     * Buttons which are category filters
+     * @protected
+     */
     this._categoryButtons = this.$element.find('.panda-filter-category-button');
 
+    /**
+     * Buttons which are sorting filters
+     * @protected
+     */
     this._sortButtons = this.$element.find('.panda-filter-sorting-button');
 
     /**
-     * All filter items items.
+     * All filtering items.
      * @protected
      */
     this._items = this.$element.find('.panda-filter-item');
 
+    /**
+     * The list of filtering items
+     * @protected
+     */
     this._itemsList = this.$element.find('.items-list');
 
     /**
@@ -82,22 +78,58 @@
      */
     this._itemTemplate = this.$element.find('.panda-filter-item:first-child');
 
+    /**
+     * The element which resets filters
+     * @protected
+     */
     this._resetEl = this.$element.find('.panda-filter-reset');
 
+    /**
+     * The element which loads more items (ajax)
+     * @protected
+     */
     this._loadMoreEl = this.$element.find('.panda-filter-load-more');
 
+    /**
+     * The element which contains "no results" data
+     * @protected
+     */
     this._noResultEl = this.$element.find('.panda-filter-no-result');
 
+    /**
+     * The element which clears search data
+     * @protected
+     */
     this._clearSearchEl = this.$element.find('.panda-filter-clear-search');
 
+    /**
+     * The active categories list wrapper
+     * @protected
+     */
     this._activeListEl = this.$element.find('.panda-filter-active-categories-list');
 
+    /**
+     * The search input
+     * @protected
+     */
     this._searchEl = this.$element.find('.panda-filter-search');
 
+    /**
+     * An array of active filters' strings
+     * @protected
+     */
     this._filterTypes = [];
 
+    /**
+     * An array of items that are matched / active and shown on frontend
+     * @protected
+     */
     this._activeItems = this._items;
 
+    /**
+     * A temporary array of matched by search items 
+     * @protected
+     */
     this._tempSearch = this._activeItems;
 
     this.initialize();
@@ -129,6 +161,9 @@
     sorting: true
   };
 
+  /**
+   * Calls main functions
+   */
   Panda.prototype.initialize = function() {
     if (this.options.sorting) this.sortItems();
     
@@ -137,7 +172,10 @@
     this.bindEvents();
   };
 
-  // @todo use .each function for every event
+  /**
+   * Binds events and callbacks to an elements
+   * @todo use .each function for every event
+   */
   Panda.prototype.bindEvents = function() {
     var that = this;
 
@@ -187,6 +225,9 @@
     });
   };
 
+  /**
+   * Merges custom options with a custom ones. Calls $.ajax with merged params
+   */
   Panda.prototype.loadMoreItems = function() {
     var that     = this,
         defaults = {
@@ -309,7 +350,7 @@
     if (this._tempSearch != matchedItems) this._tempSearch = matchedItems;
   }
 
-  /*
+  /**
    * Filters items by a given category, fills temporary array of active categories \
    * \ which is given as a parameter to a matchItems() function
    * @param {Object} elementContext - The 'this' context of binded element
@@ -321,38 +362,7 @@
 
     self.toggleClass('active');
 
-    // TODO: refactor all this shit
-    if (this.options.showActive) {
-      var currentCategory = self.clone(true);
-      var clonedItem = this._activeListEl.find('.panda-filter-category-button[data-filter-category="' + filterCategory + '"]');
-      var relatedItem = $('.panda-filter-category-button[data-filter-category="' + filterCategory + '"]');
-
-      if (!self.parents('.panda-filter-active-categories-list').length) { // Check if clicked element is in a list of active ones
-        if (!clonedItem.length) { // Check if such category is not there already
-          var categoryGroup   = self.data('filter-category-group'),
-              categoryGroupEl = $('.category-filter .panda-filter-category-group[data-filter-category-group="' + categoryGroup + '"]');
-
-          if (typeof categoryGroup !== 'undefined') {
-            var currentCategoryGroup = categoryGroupEl.clone(),
-                clonedGroup          = this._activeListEl.find('.panda-filter-category-group[data-filter-category-group="' + categoryGroup + '"]');
-
-            if (!clonedGroup.length) {
-              currentCategoryGroup.append(currentCategory).appendTo(this._activeListEl);
-            } else {
-              clonedGroup.append(currentCategory);
-            }
-          } else {
-            this._activeListEl.append(currentCategory);
-          }
-        } else {
-          clonedItem.remove(); // Temporary solution
-        }
-      } else {
-        relatedItem.removeClass('active');
-        self.remove(); // Temporary solution
-      }
-    }
-    // shit ends
+    if (this.options.showActive) this.showActiveList(self);
 
     // If filter is already active
     if (filterTypeTemp.indexOf(filterCategory) > -1) {
@@ -372,6 +382,49 @@
     if (this.options.showAvailable) this.countAvailableItems(this._activeItems);
   };
 
+  /**
+   * Sorry for this bunch of code in advance
+   * @todo Refactor this "feature"
+   * Appends or removes active categories to/from an active categories list
+   * @param {Object} - elementContext - The 'this' context of binded element
+   */
+  Panda.prototype.showActiveList = function(elementContext) {
+    var self            = $(elementContext),
+        filterCategory  = self.data('filter-category'),
+        currentCategory = self.clone(true),
+        clonedItem      = this._activeListEl.find('.panda-filter-category-button[data-filter-category="' + filterCategory + '"]'),
+        relatedItem     = $('.panda-filter-category-button[data-filter-category="' + filterCategory + '"]');
+
+    if (!self.parents('.panda-filter-active-categories-list').length) { // Check if clicked element is in a list of active ones
+      if (!clonedItem.length) { // Check if such category is not there already
+        var categoryGroup   = self.data('filter-category-group'),
+            categoryGroupEl = $('.category-filter .panda-filter-category-group[data-filter-category-group="' + categoryGroup + '"]');
+
+        if (typeof categoryGroup !== 'undefined') {
+          var currentCategoryGroup = categoryGroupEl.clone(),
+              clonedGroup          = this._activeListEl.find('.panda-filter-category-group[data-filter-category-group="' + categoryGroup + '"]');
+
+          if (!clonedGroup.length) {
+            currentCategoryGroup.append(currentCategory).appendTo(this._activeListEl);
+          } else {
+            clonedGroup.append(currentCategory);
+          }
+        } else {
+          this._activeListEl.append(currentCategory);
+        }
+      } else {
+        clonedItem.remove();
+      }
+    } else {
+      relatedItem.removeClass('active');
+      self.remove();
+    }
+  };
+
+  /**
+   * Clears filters if no active category present. Matches items by a given filters array
+   * @param {Array} filterTypeArray - An array of strings, active filters
+   */
   Panda.prototype.matchItems = function(filterTypeArray) {
     // If no active filter selected - Clear @filterTypeArray to show all items
     if (filterTypeArray[0] === 'all') {
@@ -397,6 +450,7 @@
    */
   Panda.prototype.matchItemsByAnd = function(items, filterType) {
     var matchedItems = [];
+
     $(items).each(function() {
       var item           = $(this),
           itemCategories = item.data('filter-category').replace(' ', '').split(','); // Split categories into array
@@ -415,6 +469,34 @@
 
               return;
             }
+          }
+        }
+      }
+    });
+
+    return matchedItems;
+  };
+
+  /**
+   * Matches items by "||" algorithm
+   * @param {Array} items - items, through which we iterate and match by given @filterType
+   * @param {Array} filterType - array of filter values, f.e categories.
+   */
+  Panda.prototype.matchItemsByOr = function(items, filterType) {
+    var matchedItems = [];
+
+    $(items).each(function() {
+      var item           = $(this),
+          itemCategories = item.data('filter-category').replace(' ', '').split(','); // Split categories into array
+
+      for (var i in itemCategories) {
+        for (var j in filterType) {
+          var type = filterType[j];
+
+          if (itemCategories[i] === type) {
+            matchedItems.push(item[0]); // !important: Push only DOM element instead of whole $ object
+
+            return;
           }
         }
       }
@@ -460,8 +542,12 @@
       button.attr('data-filter-category-available', availableItems);
 
     });
-  }
+  };
 
+  /**
+   * Animates given items. Shows no results if items array is empty
+   * @param {Array} itemsToAnimate - An array of jQuery objects / DOM elements to animate
+   */
   Panda.prototype.animateItems = function(itemsToAnimate) {
     this._items = this.getAllFilterItems();
 
@@ -486,6 +572,10 @@
     this.gridElements('.panda-filter-item.matched');
   };
 
+  /**
+   * Sets position of filter items
+   * @param {Object} elements - The elements to position.
+   */
   Panda.prototype.gridElements = function(elements) {
     var that            = this,
         gridItems       = (elements) ? that._itemsList.find(elements) : that._itemsList.find('.panda-filter-item'),
@@ -541,6 +631,9 @@
     that._itemsList.height(totalGridHeight); 
   };
 
+  /**
+   * Clears all filters and resets them
+   */
   Panda.prototype.clearFilters = function() {
     this._filterTypes = [];
 
